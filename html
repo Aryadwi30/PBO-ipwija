@@ -1,0 +1,63 @@
+// Model Nilai
+class Nilai {
+    constructor(nilai) {
+        this.nilai = nilai;
+    }
+
+    hitungRataRata() {
+        if (!Array.isArray(this.nilai) || this.nilai.length === 0) {
+            throw new Error("Data nilai tidak valid atau kosong.");
+        }
+        const total = this.nilai.reduce((acc, curr) => acc + curr, 0);
+        return total / this.nilai.length;
+    }
+}
+
+// View Nilai
+class NilaiView {
+    render(rataRata) {
+        return `Rata-rata nilai: ${rataRata}`;
+    }
+
+    renderError(error) {
+        return `Error: ${error}`;
+    }
+}
+
+// Controller Nilai
+class NilaiController {
+    constructor(Model, View) {
+        this.Model = Model;
+        this.View = View;
+    }
+
+    tampilkanRataRata(nilai) {
+        try {
+            const modelNilai = new this.Model(nilai);
+            const rataRata = modelNilai.hitungRataRata();
+            console.log(this.View.render(rataRata)); // Gunakan instance view yang sudah ada
+        } catch (error) {
+            console.log(this.View.renderError(error.message)); // Gunakan instance view yang sudah ada
+        }
+    }
+}
+
+// Fungsi Pembagian
+function bagi(a, b) {
+    if (b === 0) {
+        console.error("Terjadi error: Pembagian dengan nol tidak diperbolehkan.");
+        return null;
+    }
+    return a / b;
+}
+
+// Inisialisasi dan Penggunaan
+const nilaiController = new NilaiController(Nilai, new NilaiView()); // Instance View langsung diinisialisasi
+
+// Contoh Penggunaan tampilkanRataRata
+nilaiController.tampilkanRataRata([80, 90, 100]); // Output: Rata-rata nilai: 90
+nilaiController.tampilkanRataRata([]);            // Output: Error: Data nilai tidak valid atau kosong.
+
+// Contoh Penggunaan Fungsi bagi
+console.log(bagi(10, 2)); // Output: 5
+console.log(bagi(10, 0)); // Output: Terjadi error: Pembagian dengan nol tidak diperbolehkan.

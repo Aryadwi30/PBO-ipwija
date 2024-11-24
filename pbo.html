@@ -36,7 +36,8 @@
             </div>
             <div style="margin-bottom: 15px;">
               <label for="pin">PIN:</label><br/>
-              <input type="password" id="pin" style="padding: 5px; width: 200px;">
+              <input type="password" id="pin" style="padding: 5px; width: 160px;">
+              <button id="togglePin" type="button" style="padding: 5px;">Show</button>
             </div>
             <button id="login" style="padding: 10px 20px; margin-right: 10px;">Login</button>
             <button id="cancel" style="padding: 10px 20px;">Cancel</button>
@@ -46,12 +47,9 @@
     },
     controller: {
       signin: function () {
-        // Event listener untuk tombol login
         document.getElementById("login").onclick = function () {
           const username = document.getElementById("username").value;
           const pin = document.getElementById("pin").value;
-
-          // Validasi user berdasarkan data di model
           const user = pbo.model.mahasiswa.find(
             (m) => m.username === username && m.pin === pin
           );
@@ -63,21 +61,32 @@
           }
         };
       },
+      togglePinVisibility: function () {
+        document.getElementById("togglePin").onclick = function () {
+          const pinInput = document.getElementById("pin");
+          const toggleButton = document.getElementById("togglePin");
+
+          if (pinInput.type === "password") {
+            pinInput.type = "text";
+            toggleButton.textContent = "Hide";
+          } else {
+            pinInput.type = "password";
+            toggleButton.textContent = "Show";
+          }
+        };
+      },
       signout: function () {
-        // Membersihkan input username dan pin
         document.getElementById("username").value = "";
         document.getElementById("pin").value = "";
       },
       signform: function () {
-        // Menampilkan form login di elemen #content
         document.getElementById("content").innerHTML = pbo.view.signform();
 
-        // Pasang event listener untuk login dan cancel
         pbo.controller.signin();
         pbo.controller.cancel();
+        pbo.controller.togglePinVisibility();
       },
       cancel: function () {
-        // Event listener untuk tombol cancel
         document.getElementById("cancel").onclick = function () {
           pbo.controller.signout();
         };
@@ -85,6 +94,5 @@
     },
   };
 
-  // Jalankan form login saat pertama kali halaman dimuat
   pbo.controller.signform();
 </script>

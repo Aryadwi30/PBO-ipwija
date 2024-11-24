@@ -1,4 +1,4 @@
-<div id="content">halo</div>
+<div id="content" style="position: relative; height: 100vh;">halo</div>
 
 <script>
   const pbo = {
@@ -20,10 +20,30 @@
     view: {
       signform: function () {
         return `
-          Username: <input type="text" id="username"><br/>
-          PIN: <input type="password" id="pin"><br/>
-          <button id="login">Login</button><br/>
-          <button id="cancel">Cancel</button><br/>
+          <div style="
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            text-align: center;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+          ">
+            <h2>Login Form</h2>
+            <div style="margin-bottom: 15px;">
+              <label for="username">Username:</label><br/>
+              <input type="text" id="username" style="padding: 5px; width: 200px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+              <label for="pin">PIN:</label><br/>
+              <input type="password" id="pin" style="padding: 5px; width: 200px;">
+            </div>
+            <button id="login" style="padding: 10px 20px; margin-right: 10px;">Login</button>
+            <button id="cancel" style="padding: 10px 20px;">Cancel</button>
+          </div>
         `;
       },
     },
